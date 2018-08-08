@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+    <script>if (window.module) module = window.module;</script>
+
+    <meta charset="UTF-8">
+    <title>ProcessData</title>
+</head>
+
+<body class="bg-info text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="display-4">ProcessData</h1>
+                <div class="alert alert-light shadow">
+                    <p class="lead">This application will aggregate the comma delimited data files from the source directory into a single
+                        file per experiment type.</p>
+                    <hr class="my-4">
+                    <p>The data output files filename's differ in format. Please select the format you would like to combine
+                        from the dropdown below.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="dropdown">
+                        <div class="form-group">
+                            <label for="dropdown">Choose file format:</label>
+                            <select class="form-control shadow" id="dropdown">
+                                <option>ID_STIMDELAY_IP_EXPERIMENT</option>
+                                <option>STIMDELAY_EXPERIMENT_ID</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sourcePath">Source directory path:</label>
+                        <input type="text" class="form-control shadow" id="sourcePath" placeholder="Enter path">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-light shadow">Process</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
