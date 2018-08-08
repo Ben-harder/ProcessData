@@ -39,23 +39,30 @@
                     <div class="dropdown">
                         <div class="form-group">
                             <label for="dropdown">Choose file format:</label>
-                            <select class="form-control shadow" id="dropdown">
+                            <select class="form-control" id="dropdown">
                                 <option>ID_STIMDELAY_IP_EXPERIMENT</option>
                                 <option>STIMDELAY_EXPERIMENT_ID</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="sourcePath">Source directory path:</label>
-                        <input type="text" class="form-control shadow" id="sourcePath" placeholder="Enter path">
+                    <label for="sourcePath">Source directory path:</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control mr-auto" id="sourcePath" placeholder="Enter path">
+                        <span class="input-group-btn">
+                            <button class="btn btn-light" id="sourcePathButton">Choose directory...</button>
+                        </span>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-light shadow">Process</button>
+                        <button class="btn btn-light">Process</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+    require('./processor.js');
+</script>
 
 </html>
