@@ -8,3 +8,7 @@ This application will combine a directory of comma delimited data.
 * How does the original program do it?
 
     It seems to assume the name is made of two sections, the game name with response time, and the subject ID. The subject ID being at the     end of the file name. I assume the program just says the subject ID is whatever text comes after the last underscore character and         everything before it is the experiment name.
+
+* Do the different trials need to be differentiated from each other by more than subject IDs?
+
+    If this was true then the IP field would be added to the output, aggregated, file. However, only the newer web tasks have an IP.
