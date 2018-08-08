@@ -1,0 +1,23 @@
+{
+  "name": "processdata",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ben-harder/ProcessData.git"
+  },
+  "author": "Ben Harder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ben-harder/ProcessData/issues"
+  },
+  "homepage": "https://github.com/Ben-harder/ProcessData#readme",
+  "devDependencies": {
+    "electron": "^2.0.6"
+  }
+}
