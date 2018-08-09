@@ -12,3 +12,9 @@ This application will combine a directory of comma delimited data.
 * Do the different trials need to be differentiated from each other by more than subject IDs?
 
     If this was true then the IP field would be added to the output, aggregated, file. However, only the newer web tasks have an IP.
+    
+* How to aggregate files?
+
+    Rules: different experiments and subject IDs are all merged into one file. The only important factor is that the headers are the same. If the headers are not the same, provide an error message. 
+    
+    So, first check the first files headers and use that as a basis for the rest.
