@@ -9,7 +9,7 @@ const form = document.querySelector('form');
 
 const inputs = {
     fileType: form.querySelector('select[name="fileType"]'),
-    sourcePath: form.querySelector('input[name="sourcePath"]')
+    sourcePath: document.getElementById('sourcePath')
 };
 
 const buttons = {
@@ -25,6 +25,6 @@ buttons.source.addEventListener('click', (event) =>
     });
     if (directory)
     {
-        inputs.source.values = directory;
+        inputs.sourcePath.value = directory;
     }
 });
