@@ -19,4 +19,4 @@ This application will combine a directory of comma delimited data.
     
 * What should the program do if it encounters a different header format?
 
-    Based on what david says, it should either create a new output file for data files of that format OR just ignore the files with that format.
+    Provide a message on which files had a different header and ignore the second file.
