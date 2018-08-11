@@ -15,6 +15,8 @@ This application will combine a directory of comma delimited data.
     
 * How to aggregate files?
 
-    Rules: different experiments and subject IDs are all merged into one file. The only important factor is that the headers are the same. If the headers are not the same, provide an error message. 
+    Check the first data file for a header format and use it as a template. Then go through the files and if their headeers match the format then append them to an output data file.
     
-    So, first check the first files headers and use that as a basis for the rest.
+* What should the program do if it encounters a different header format?
+
+    Provide a message on which files had a different header and ignore the second file.
