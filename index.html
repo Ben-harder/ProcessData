@@ -28,23 +28,13 @@
                     <p class="lead">This application will aggregate the comma delimited data files from the source directory into a single
                         file per experiment type.</p>
                     <hr class="my-4">
-                    <p>The data output files filename's differ in format. Please select the format you would like to combine
-                        from the dropdown below.</p>
+                    <p>Enter or select the source the directory path in the field below.</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <form>
-                    <div class="dropdown">
-                        <div class="form-group">
-                            <label for="dropdown">Choose file format:</label>
-                            <select class="form-control" id="dropdown">
-                                <option>ID_STIMDELAY_IP_EXPERIMENT</option>
-                                <option>STIMDELAY_EXPERIMENT_ID</option>
-                            </select>
-                        </div>
-                    </div>
                     <label for="sourcePath">Source directory path:</label>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control mr-auto" id="sourcePath" placeholder="Enter path">
@@ -55,8 +45,9 @@
                     <div class="form-group">
                         <button id="submit" class="btn btn-light">Process</button>
                     </div>
+                    <div id="mismatchDiv">
+                    </div>
                     <div id="alertDiv">
-
                     </div>
                 </form>
             </div>

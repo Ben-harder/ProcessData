@@ -54,7 +54,10 @@ function handleFiles(files, sourcePath)
         var f = files[i];
 
         if (!header.match(getHeader(sourcePath + f)))
+        {
             console.log("File header mismatch between " + files[0] + " and " + f);
+            appendMismatch(files[0], f, sourcePath);
+        }
         else 
         {
             var data = removeHeader(sourcePath + f);
@@ -66,10 +69,9 @@ function handleFiles(files, sourcePath)
 // This function will append the passed file data to an output aggregated file.
 function appendFile(data, sourcePath)
 {
-
     try
     {
-        fs.appendFileSync("\1" + "aggregatedData.txt", data, 'utf8');
+        fs.appendFileSync(sourcePath + "aggregatedData.txt", data, 'utf8');
     } catch (err)
     {
         // Get rid of old alert
@@ -77,10 +79,41 @@ function appendFile(data, sourcePath)
 
         // Append new alert
         $('#alertDiv').append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error:</strong> <span id='errorMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
-        
+
         // Add message
         var errorMessage = $('#errorMessage');
         errorMessage.html(" appending data failed. Please check your directory path and try again.");
+    }
+}
+
+// This function will create a text file which will have the file header mismatches
+function appendMismatch(file1, file2, sourcePath)
+{
+    var data = "File header mismatch between " + file1 + " and " + file2 + '\n';
+
+    try
+    {
+        fs.appendFileSync(sourcePath + "headerMismatch.txt", data, 'utf8');
+        // Get rid of old alert
+        $('#mismatchDiv').html("");
+
+        // Append new alert
+        $('#mismatchDiv').append("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Warning:</strong> <span id='mismatchMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
+
+        // Add message
+        var mismatchMessage = $('#mismatchMessage');
+        mismatchMessage.html("There was at least one file with a mismatched header. Check <a href='" + sourcePath + "'headerMismatch.txt' class='alert-link'>this</a> file to view.");
+    } catch (err)
+    {
+        // Get rid of old alert
+        $('#alertDiv').html("");
+
+        // Append new alert
+        $('#alertDiv').append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error:</strong> <span id='errorMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
+
+        // Add message
+        var errorMessage = $('#errorMessage');
+        errorMessage.html(" appending mismatched files failed. Please check your directory path and try again.");
     }
 }
 
