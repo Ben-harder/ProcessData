@@ -4,8 +4,12 @@
 const { remote } = require('electron');
 const { dialog } = remote;
 const fs = remote.require('fs');
+const os = require('os');
 
 const form = document.querySelector('form');
+
+// This variable will be used to tell if the processing has begun
+var processingHasStarted = false;
 
 const inputs = {
     fileType: form.querySelector('select[name="fileType"]'),
@@ -78,19 +82,64 @@ function handleFiles(files, sourcePath, outputPath)
         else // Otherwise the headers match so append the file data to the output file.
         {
             var data = removeHeader(sourcePath + f, header);
-            appendFile(data, outputPath);
+            try
+            {
+                appendFile(data, outputPath, header);
+            } catch (e)
+            {
+                // Get rid of old alert
+                $('#alertDiv').html("");
+
+                // Append new alert
+                $('#alertDiv').append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error:</strong> <span id='errorMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
+
+                // Add message
+                var errorMessage = $('#errorMessage');
+                errorMessage.html(" appending data failed. " + e);
+
+                // Scroll to error
+                $('html, body').stop().animate({
+                    scrollTop: $('#alertDiv').offset().top
+                }, 1000);
+            }
         }
     }
+
+    // The data outputting has been completed. Reset this flag.
+    processingHasStarted = false;
 }
 
 // This function will append the passed file data to an output aggregated file.
-function appendFile(data, path)
+function appendFile(data, path, header)
 {
+    var fileExists = true;
+
+    // First check if the output file exists. If it doesn't then add the header to the first line.
+    try
+    {
+        fs.accessSync(path + "aggregatedData.txt")
+    } catch (err)
+    {
+        fileExists = false;
+        fs.appendFileSync(path + "aggregatedData.txt", header + os.EOL, 'utf8');
+    }
+
+    // If the file already exists, but processing hasn't started, then the file already exists.
+    if (fileExists && !processingHasStarted)
+    {
+        throw "The output file already exists!";
+    }
+
+    var didFail = false;
+
+    // Now append the task data to the file.
     try
     {
         fs.appendFileSync(path + "aggregatedData.txt", data, 'utf8');
     } catch (err)
     {
+        didFail = true;
+
         // Get rid of old alert
         $('#alertDiv').html("");
 
@@ -101,12 +150,18 @@ function appendFile(data, path)
         var errorMessage = $('#errorMessage');
         errorMessage.html(" appending data failed. Please check your directory path and try again.");
     }
+
+    // If the data was appending successfuly and the processing hadn't started, it has now.
+    if (!didFail && !processingHasStarted)
+    {
+        processingHasStarted = true;
+    }
 }
 
 // This function will create a text file which will have the file header mismatches
 function appendMismatch(file1, file2, path)
 {
-    var data = "File header mismatch between " + file1 + " and " + file2 + '\n';
+    var data = "File header mismatch between " + file1 + " and " + file2 + os.EOL;
 
     try
     {
@@ -119,7 +174,12 @@ function appendMismatch(file1, file2, path)
 
         // Add message
         var mismatchMessage = $('#mismatchMessage');
-        mismatchMessage.html("There was at least one file with a mismatched header. A mismatch log was created in the output directory");
+        mismatchMessage.html("There was at least one file with a mismatched header. A mismatch log was created in the output directory.");
+
+        // Scroll to error
+        $('html, body').stop().animate({
+            scrollTop: $('#alertDiv').offset().top
+        }, 1000);
     } catch (err)
     {
         // Get rid of old alert
@@ -131,6 +191,11 @@ function appendMismatch(file1, file2, path)
         // Add message
         var errorMessage = $('#errorMessage');
         errorMessage.html(" appending mismatched files failed. Please check your directory path and try again.");
+
+        // Scroll to error
+        $('html, body').stop().animate({
+            scrollTop: $('#alertDiv').offset().top
+        }, 1000);
     }
 }
 
