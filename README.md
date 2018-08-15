@@ -1,8 +1,9 @@
-# ProcessData
-### Ben Harder, 2018
+# ProcessData 
+### Author: Ben Harder, 2018
 
+## Description
 
-This application will combine a directory of comma delimited data. The combined data can be found in a specified output directory along with a log of any files which had mismatched headers.
+This application will combine a directory of comma delimited data. The combined data can be found in the specified output directory. The program was designed to not accept **mismatched headers** and so a file documenting which files were mismatched, if there were any, will also be created in the output directory.
 
 ## Instructions
 
