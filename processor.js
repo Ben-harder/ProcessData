@@ -14,7 +14,8 @@ var processingHasStarted = false;
 const inputs = {
     fileType: form.querySelector('select[name="fileType"]'),
     sourcePath: document.getElementById('sourcePath'),
-    outputPath: document.getElementById('outputPath')
+    outputPath: document.getElementById('outputPath'),
+    outputName: document.getElementById('outputName')
 };
 
 const buttons = {
@@ -60,11 +61,34 @@ buttons.submit.addEventListener('click', (event) =>
 
     fs.readdir(inputs.sourcePath.value, (err, files) =>
     {
-        handleFiles(files, inputs.sourcePath.value, inputs.outputPath.value);
+        if (err)
+        {
+            // Get rid of old alert
+            $('#alertDiv').html("");
+
+            // Append new alert
+            $('#alertDiv').append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error:</strong> <span id='errorMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
+
+            // Add message
+            var errorMessage = $('#errorMessage');
+            errorMessage.html(" There was an error reading the source directory. Please check the path and try again.");
+
+            // Scroll to error
+            $('html, body').stop().animate({
+                scrollTop: $('#alertDiv').offset().top
+            }, 1000);
+
+            return;
+        }
+        else
+        {
+            handleFiles(files, inputs.sourcePath.value, inputs.outputPath.value, inputs.outputName.value);
+        }
+
     });
 });
 
-function handleFiles(files, sourcePath, outputPath)
+function handleFiles(files, sourcePath, outputPath, outputName)
 {
 
     // The first file's header will be used as a template to check all following files.
@@ -84,7 +108,7 @@ function handleFiles(files, sourcePath, outputPath)
             var data = removeHeader(sourcePath + f, header);
             try
             {
-                appendFile(data, outputPath, header);
+                appendFile(data, outputPath, header, outputName);
             } catch (e)
             {
                 // Get rid of old alert
@@ -95,7 +119,7 @@ function handleFiles(files, sourcePath, outputPath)
 
                 // Add message
                 var errorMessage = $('#errorMessage');
-                errorMessage.html(" appending data failed. " + e);
+                errorMessage.html(" Appending data failed. " + e);
 
                 // Scroll to error
                 $('html, body').stop().animate({
@@ -110,18 +134,18 @@ function handleFiles(files, sourcePath, outputPath)
 }
 
 // This function will append the passed file data to an output aggregated file.
-function appendFile(data, path, header)
+function appendFile(data, path, header, outputName)
 {
     var fileExists = true;
 
     // First check if the output file exists. If it doesn't then add the header to the first line.
     try
     {
-        fs.accessSync(path + "aggregatedData.txt")
+        fs.accessSync(path + outputName + ".txt")
     } catch (err)
     {
         fileExists = false;
-        fs.appendFileSync(path + "aggregatedData.txt", header + os.EOL, 'utf8');
+        fs.appendFileSync(path + outputName + ".txt", header + os.EOL, 'utf8');
     }
 
     // If the file already exists, but processing hasn't started, then the file already exists.
@@ -135,7 +159,7 @@ function appendFile(data, path, header)
     // Now append the task data to the file.
     try
     {
-        fs.appendFileSync(path + "aggregatedData.txt", data, 'utf8');
+        fs.appendFileSync(path + outputName + ".txt", data, 'utf8');
     } catch (err)
     {
         didFail = true;
@@ -148,7 +172,12 @@ function appendFile(data, path, header)
 
         // Add message
         var errorMessage = $('#errorMessage');
-        errorMessage.html(" appending data failed. Please check your directory path and try again.");
+        errorMessage.html(" Appending data failed. Please check your directory path and try again.");
+
+        // Scroll to error
+        $('html, body').stop().animate({
+            scrollTop: $('#alertDiv').offset().top
+        }, 1000);
     }
 
     // If the data was appending successfuly and the processing hadn't started, it has now.
@@ -166,6 +195,7 @@ function appendMismatch(file1, file2, path)
     try
     {
         fs.appendFileSync(path + "headerMismatch.txt", data, 'utf8');
+
         // Get rid of old alert
         $('#mismatchDiv').html("");
 
@@ -190,7 +220,7 @@ function appendMismatch(file1, file2, path)
 
         // Add message
         var errorMessage = $('#errorMessage');
-        errorMessage.html(" appending mismatched files failed. Please check your directory path and try again.");
+        errorMessage.html(" Appending mismatched files failed. Please check your directory path and try again.");
 
         // Scroll to error
         $('html, body').stop().animate({
@@ -212,7 +242,30 @@ function removeHeader(filePath, header)
 // This function will return the files header.
 function getHeader(filePath)
 {
-    var data = fs.readFileSync(filePath, 'utf8');
-    var header = data.substring(0, data.indexOf('\n')).trim();
+    var data;
+    var header;
+
+    try
+    {
+        data = fs.readFileSync(filePath, 'utf8');
+        header = data.substring(0, data.indexOf('\n')).trim();
+    } catch (err)
+    {
+        // Get rid of old alert
+        $('#alertDiv').html("");
+
+        // Append new alert
+        $('#alertDiv').append("<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error:</strong> <span id='errorMessage'></span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div > ");
+
+        // Add message
+        var errorMessage = $('#errorMessage');
+        errorMessage.html(" Accessing the source file failed. Please check your directory path and try again.");
+
+        // Scroll to error
+        $('html, body').stop().animate({
+            scrollTop: $('#alertDiv').offset().top
+        }, 1000);
+        return;
+    }
     return header;
 }
