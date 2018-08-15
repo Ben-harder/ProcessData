@@ -9,7 +9,7 @@ This application will combine a directory of comma delimited data. The combined 
 
 1. Launch the application.
 2. Enter a source path.
-3. Enter a output path.
+3. Enter an output path.
 4. Enter output file name.
 5. Click 'process'.
 6. Open Excel.
