@@ -104,7 +104,7 @@ function handleFiles(files, sourcePath, outputPath, outputName)
         if (!header.match(getHeader(sourcePath + f))) // If there is a header mismatch then append that file name to the mismatch log.
         {
             console.log("File header mismatch between " + files[0] + " and " + f);
-            appendMismatch(files[0], f, outputPath);
+            appendMismatch(files[0], f, outputName, outputPath);
         }
         else // Otherwise the headers match so append the file data to the output file.
         {
@@ -191,13 +191,13 @@ function appendFile(data, path, header, outputName)
 }
 
 // This function will create a text file which will have the file header mismatches
-function appendMismatch(file1, file2, path)
+function appendMismatch(file1, file2, outputName, path)
 {
     var data = "File header mismatch between " + file1 + " and " + file2 + os.EOL;
 
     try
     {
-        fs.appendFileSync(path + "headerMismatch.txt", data, 'utf8');
+        fs.appendFileSync(path + outputName + "_headerMismatch.txt", data, 'utf8');
 
         // Get rid of old alert
         $('#mismatchDiv').html("");

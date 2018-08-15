@@ -1,11 +1,13 @@
 {
   "name": "processdata",
-  "version": "0.1.0",
+  "productName": "ProcessData",
+  "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package-win": "electron-packager . ProcessData --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ProcessData\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/Ben-harder/ProcessData#readme",
   "devDependencies": {
-    "electron": "^2.0.6"
+    "electron": "^2.0.6",
+    "electron-packager": "^12.1.0"
   }
 }
