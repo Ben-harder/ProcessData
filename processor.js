@@ -52,6 +52,9 @@ buttons.submit.addEventListener('click', (event) =>
 {
     event.preventDefault();
 
+    // Get rid of old alerts
+    $('#alertDiv').html("");
+
     // Format the sourcePath to have a '\' at the end
     if (!inputs.sourcePath.value.endsWith('\\'))
         inputs.sourcePath.value = inputs.sourcePath.value + '\\';
