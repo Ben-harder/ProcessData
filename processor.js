@@ -31,7 +31,8 @@ buttons.source.addEventListener('click', (event) =>
     }
 });
 
-buttons.output.addEventListener('click', (event) => {
+buttons.output.addEventListener('click', (event) =>
+{
     event.preventDefault();
     const directory = dialog.showOpenDialog({
         properties: ['openDirectory'],
@@ -49,9 +50,10 @@ buttons.submit.addEventListener('click', (event) =>
     // Format the sourcePath to have a '\' at the end
     if (!inputs.sourcePath.value.endsWith('\\'))
         inputs.sourcePath.value = inputs.sourcePath.value + '\\';
-    else if (!inputs.outputPath.value.endsWith('\\'))
+
+    if (!inputs.outputPath.value.endsWith('\\'))
         inputs.outputPath.value = inputs.outputPath.value + '\\';
-    
+
     fs.readdir(inputs.sourcePath.value, (err, files) =>
     {
         handleFiles(files, inputs.sourcePath.value, inputs.outputPath.value);
@@ -137,8 +139,9 @@ function removeHeader(filePath, header)
 {
     var data = fs.readFileSync(filePath, 'utf8');
     var regex = new RegExp(header, "g");
-    data = data.replace(regex, '');
-    return data.substring(data.indexOf('\n') + 1);
+    data = data.replace(regex, ''); // Get rid of headers throughout the file
+    data = data.replace(/^\s*/gm, ''); // Get rid of the dangling newlines after removing the headers
+    return data.substring(data);
 }
 
 // This function will return the files header.
