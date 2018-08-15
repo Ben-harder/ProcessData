@@ -9,9 +9,10 @@ This application will combine a directory of comma delimited data. The combined 
 
 1. Launch the application.
 2. Enter a source path.
-3. Enter a output path.
-4. Click 'process'.
-5. Open Excel.
-6. Open the insert data dialog.
-7. Navigate to the directory you specified as the output path and select the output file.
-8. Insert the data.
+3. Enter an output path.
+4. Enter output file name.
+5. Click 'process'.
+6. Open Excel.
+7. Open the insert data dialog.
+8. Navigate to the directory you specified as the output path and select the output file.
+9. Insert the data.
