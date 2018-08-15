@@ -28,7 +28,7 @@
                     <p class="lead">This application will aggregate the comma delimited data files from the source directory into a single
                         file per experiment type.</p>
                     <hr class="my-4">
-                    <p>Enter or select the source the directory path in the field below.</p>
+                    <p>Use the source directory field to choose what files to combine and the output path to choose where the aggregated data will be output.</p>
                 </div>
             </div>
         </div>
@@ -40,6 +40,13 @@
                         <input type="text" class="form-control mr-auto" id="sourcePath" placeholder="Enter path">
                         <span class="input-group-btn">
                             <button class="btn btn-light" id="sourcePathButton">Choose directory...</button>
+                        </span>
+                    </div>
+                    <label for="outputPath">Output directory path:</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control mr-auto" id="outputPath" placeholder="Enter path">
+                        <span class="input-group-btn">
+                            <button class="btn btn-light" id="outputPathButton">Choose directory...</button>
                         </span>
                     </div>
                     <div class="form-group">
