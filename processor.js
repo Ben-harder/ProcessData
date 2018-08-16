@@ -93,6 +93,8 @@ buttons.submit.addEventListener('click', (event) =>
 
 function handleFiles(files, sourcePath, outputPath, outputName)
 {
+    // Reset the finished div
+    $('#finishedDiv').html('');
 
     // The first file's header will be used as a template to check all following files.
     var header = getHeader(sourcePath + files[0]);
@@ -131,6 +133,8 @@ function handleFiles(files, sourcePath, outputPath, outputName)
             }
         }
     }
+
+    $('#finishedDiv').html('Finished!');
 
     // The data outputting has been completed. Reset this flag.
     processingHasStarted = false;
